@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Timer, Flower, Moon, Sun, TreePine, Snowflake, Gift, Plus, Sparkles, Trash2 } from 'lucide-react';
+import { Timer, Flower, Moon, TreePine, Snowflake, Gift, Plus, Sparkles, Trash2, HelpCircle, Clock } from 'lucide-react';
 import MushroomTimer from './components/MushroomTimer.tsx';
 
 export type ThemeType = 'light' | 'dark' | 'christmas';
@@ -49,84 +49,100 @@ export default function App() {
   }, [theme]);
 
   const getBgColor = () => {
-    if (theme === 'dark') return 'bg-[#020617]';
-    if (theme === 'christmas') return 'bg-[#fdf2f2]';
-    return 'bg-[#f1f9e8]';
+    if (theme === 'dark') return 'bg-[#0a0f1d]';
+    if (theme === 'christmas') return 'bg-[#fff5f5]';
+    return 'bg-[#fcfdfa]';
   };
 
   const getGradient = () => {
-    if (theme === 'dark') return 'from-[#0f172a] via-[#1e1b4b] to-transparent opacity-80';
-    if (theme === 'christmas') return 'from-[#fee2e2] opacity-100';
-    return 'from-[#d9f2c1] opacity-100';
+    if (theme === 'dark') return 'from-[#1e293b]/20 via-transparent to-transparent';
+    if (theme === 'christmas') return 'from-[#fee2e2]/30 via-transparent to-transparent';
+    return 'from-[#76d02a]/5 via-transparent to-transparent';
+  };
+
+  const getSubtitle = () => {
+    switch(theme) {
+      case 'dark': return '星際阿凡達幻彩模式 ✨';
+      case 'christmas': return '溫馨聖誕期間限定版 🎄';
+      default: return '專業蘑菇戰鬥倒數助手 🌸';
+    }
+  };
+
+  const getSubtitlePrefix = () => {
+    switch(theme) {
+      case 'dark': return 'Interstellar Mode';
+      case 'christmas': return 'Holiday Special';
+      default: return 'Standard Edition';
+    }
+  };
+
+  const getSubtitleColor = () => {
+    if (theme === 'dark') return 'text-cyan-400/60';
+    if (theme === 'christmas') return 'text-red-600/60';
+    return 'text-slate-400';
   };
 
   const getTitleColor = () => {
-    if (theme === 'dark') return 'text-[#22d3ee] drop-shadow-[0_0_8px_rgba(34,211,238,0.4)]';
+    if (theme === 'dark') return 'text-white drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]';
     if (theme === 'christmas') return 'text-[#BB2528]';
-    return 'text-[#2e5210]';
+    return 'text-slate-800';
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-700 font-sans pb-48 selection:bg-[#22d3ee] selection:text-white ${getBgColor()}`}>
+    <div className={`min-h-screen transition-all duration-700 font-sans selection:bg-[#76d02a] selection:text-white pb-12 ${getBgColor()}`}>
       
-      {/* Theme Selection Group */}
-      <div className="fixed top-6 right-6 z-50 flex gap-3">
-        <button
-          onClick={() => setTheme('christmas')}
-          className={`p-3 rounded-2xl flex items-center justify-center transition-all btn-3d shadow-lg 
-            ${theme === 'christmas'
-              ? 'bg-[#BB2528] text-white shadow-[0_4px_0_0_#7f1d1d] border border-white/20'
-              : (theme === 'dark' 
-                  ? 'bg-[#1e293b] text-cyan-400/40 shadow-[0_4px_0_0_#020617] border border-cyan-500/10 hover:text-cyan-400' 
-                  : 'bg-white text-gray-300 shadow-[0_4px_0_0_#e2e8f0] border border-gray-100 hover:text-[#BB2528]')
-            }`}
-        >
-          <TreePine size={24} strokeWidth={2.5} />
-        </button>
+      {/* Premium Navigation/Theme Switcher */}
+      <nav className="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center backdrop-blur-md border-b border-white/5 shadow-sm">
+        <div className="flex items-center gap-2">
+           <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${theme === 'dark' ? 'bg-cyan-500/20 text-cyan-400' : 'bg-[#76d02a]/10 text-[#76d02a]'}`}>
+             <Timer size={18} strokeWidth={2.5} />
+           </div>
+           <span className={`text-sm font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>Pikmin Clock</span>
+        </div>
+        
+        <div className="flex items-center gap-2 bg-slate-100/50 dark:bg-slate-800/50 p-1 rounded-xl">
+          <button
+            onClick={() => setTheme('light')}
+            className={`p-2 rounded-lg transition-all ${theme === 'light' ? 'bg-white shadow-sm text-[#76d02a]' : 'text-slate-400 hover:text-slate-600'}`}
+          >
+            <Flower size={16} />
+          </button>
+          <button
+            onClick={() => setTheme('dark')}
+            className={`p-2 rounded-lg transition-all ${theme === 'dark' ? 'bg-slate-700 shadow-sm text-cyan-400' : 'text-slate-400 hover:text-slate-600'}`}
+          >
+            <Moon size={16} />
+          </button>
+          <button
+            onClick={() => setTheme('christmas')}
+            className={`p-2 rounded-lg transition-all ${theme === 'christmas' ? 'bg-white shadow-sm text-red-600' : 'text-slate-400 hover:text-slate-600'}`}
+          >
+            <TreePine size={16} />
+          </button>
+        </div>
+      </nav>
 
-        <button
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className={`p-3 rounded-2xl flex items-center justify-center transition-all btn-3d shadow-lg 
-            ${theme === 'dark' 
-              ? 'bg-[#0f172a] text-[#22d3ee] shadow-[0_4px_0_0_#020617] border border-cyan-500/30 shadow-cyan-500/10' 
-              : (theme === 'christmas'
-                  ? 'bg-white text-gray-300 shadow-[0_4px_0_0_#e2e8f0] border border-gray-100 hover:text-[#76d02a]'
-                  : 'bg-white text-[#76d02a] shadow-[0_4px_0_0_#e2e8f0] border border-[#76d02a]/10')
-            }`}
-        >
-          {theme === 'dark' ? <Sparkles size={24} strokeWidth={2.5} /> : <Moon size={24} strokeWidth={2.5} />}
-        </button>
-      </div>
-
-      <div className={`fixed top-0 left-0 w-full h-[500px] pointer-events-none transition-all duration-1000 bg-gradient-to-b ${getGradient()}`} />
+      {/* Hero Background Gradient */}
+      <div className={`fixed top-0 left-0 w-full h-[600px] pointer-events-none transition-all duration-1000 bg-gradient-to-b ${getGradient()}`} />
       
-      <div className="relative max-w-4xl mx-auto px-4 pt-16">
-        <header className="mb-12 text-center">
-          <div className={`inline-flex p-4 rounded-[2.5rem] shadow-2xl mb-6 transform -rotate-3 border-2 transition-all duration-700
-            ${theme === 'dark' 
-              ? 'bg-[#0f172a]/80 border-cyan-500/40 shadow-cyan-900/40 backdrop-blur-xl' 
-              : theme === 'christmas'
-              ? 'bg-white border-[#BB2528]/30 shadow-red-900/10'
-              : 'bg-white border-[#76d02a]/10 shadow-green-900/10'
-            }`}>
-            {theme === 'christmas' ? (
-              <TreePine size={48} strokeWidth={2.5} className="text-[#165B33]" />
-            ) : theme === 'dark' ? (
-              <Sparkles size={48} strokeWidth={2.5} className="text-[#22d3ee]" />
-            ) : (
-              <Timer size={48} strokeWidth={2.5} className="text-[#76d02a]" />
-            )}
+      <div className="relative max-w-5xl mx-auto px-6 pt-24">
+        {/* Refined Header - Dynamic Subtitle */}
+        <header className="mb-16 border-b border-slate-200 dark:border-slate-800 pb-10 transition-all duration-700 flex flex-col items-center">
+          <div className="text-center space-y-2 group">
+            <p className={`text-[10px] font-black tracking-[0.4em] uppercase transition-all duration-700 ${getSubtitleColor()}`}>
+              {getSubtitlePrefix()}
+            </p>
+            <h2 className={`text-2xl md:text-3xl font-black transition-all duration-700 tracking-tight ${getTitleColor()}`}>
+              {getSubtitle()}
+            </h2>
+            <div className={`h-1 w-12 mx-auto rounded-full mt-4 transition-all duration-700 
+              ${theme === 'dark' ? 'bg-cyan-500 shadow-[0_0_8px_rgba(34,211,238,0.8)]' : theme === 'christmas' ? 'bg-red-500' : 'bg-[#76d02a]'}`} 
+            />
           </div>
-          <h1 className={`text-5xl font-extrabold tracking-tight mb-2 transition-all duration-700 ${getTitleColor()}`}>
-            Pikmin Bloom
-          </h1>
-          <p className={`${theme === 'christmas' ? 'text-[#165B33]' : theme === 'dark' ? 'text-cyan-400/60' : 'text-[#76d02a]'} font-extrabold text-sm uppercase tracking-[0.3em]`}>
-            {theme === 'christmas' ? '聖誕節限定版 🎄' : theme === 'dark' ? '阿凡達幻彩版 ✨' : '蘑菇戰鬥倒數助手'}
-          </p>
         </header>
 
         {/* Timers Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 mb-16">
           {timerIds.map(id => (
             <MushroomTimer 
               key={id} 
@@ -151,81 +167,75 @@ export default function App() {
           ))}
         </div>
 
-        {/* Add Team Button */}
-        <div className="flex justify-center mb-10">
-          <button
-            onClick={handleAddTeam}
-            className={`px-10 py-5 rounded-full font-black text-xl btn-3d flex items-center gap-3 transition-all duration-700 shadow-xl
-              ${theme === 'christmas'
-                ? 'bg-[#165B33] text-white shadow-[0_6px_0_0_#064e3b] hover:bg-[#1b7a44]'
-                : (theme === 'dark'
-                    ? 'bg-[#0ea5e9] text-white shadow-[0_6px_0_0_#0369a1] hover:bg-[#38bdf8] border border-white/10'
-                    : 'bg-[#76d02a] text-white shadow-[0_6px_0_0_#417417] hover:bg-[#86e03a]')
-              }`}
-          >
-            <Plus size={28} strokeWidth={4} />
-            新增隊伍
-          </button>
-        </div>
-
-        {/* Information/Instruction Card */}
-        <div className={`backdrop-blur-xl border-2 p-6 rounded-[2.5rem] mb-12 flex gap-5 items-center shadow-2xl transition-all duration-700
+        {/* Info Card - Optimized Traditional Chinese Text */}
+        <div className={`border p-8 rounded-[2rem] mb-20 flex flex-col md:flex-row gap-6 items-center transition-all duration-700
           ${theme === 'dark' 
-            ? 'bg-[#1e293b]/40 border-cyan-500/20 shadow-cyan-900/20 text-cyan-50' 
+            ? 'bg-slate-900/40 border-slate-800 text-slate-300' 
             : theme === 'christmas'
-            ? 'bg-white/90 border-[#BB2528]/20 shadow-red-900/5 text-[#7f1d1d]'
-            : 'bg-white/90 border-[#76d02a]/20 shadow-green-900/5 text-[#417417]'
+            ? 'bg-white border-red-50 text-slate-700'
+            : 'bg-slate-50 border-slate-100 text-slate-700'
           }`}>
-          <div className={`p-3 rounded-2xl flex-shrink-0 transition-colors duration-700 ${theme === 'christmas' ? 'bg-[#BB2528]/10' : theme === 'dark' ? 'bg-cyan-400/10' : 'bg-[#76d02a]/10'}`}>
-            {theme === 'christmas' ? <Gift className="text-[#BB2528]" size={28} /> : theme === 'dark' ? <Sparkles className="text-cyan-400" size={28} /> : <Flower className="text-[#76d02a]" size={28} />}
+          <div className={`p-4 rounded-2xl flex-shrink-0 transition-all ${theme === 'christmas' ? 'bg-red-50 text-red-600' : theme === 'dark' ? 'bg-cyan-500/10 text-cyan-400' : 'bg-green-50 text-green-600'}`}>
+            <HelpCircle size={32} />
           </div>
           <div>
-            <p className={`font-black text-lg mb-1 tracking-wide transition-colors duration-700 ${theme === 'christmas' ? 'text-[#BB2528]' : theme === 'dark' ? 'text-cyan-300' : 'text-[#417417]'}`}>
-              {theme === 'christmas' ? '聖誕活動提醒' : theme === 'dark' ? '幻彩模式提醒' : '戰鬥提醒說明'}
-            </p>
-            <p className="text-sm font-semibold opacity-70 leading-relaxed">
-              • 音效提示：1分鐘 (長音) / 30秒 (雙音) / 10秒 (緊急三音) • 長按卡片可拖曳順序 • 拖曳至底部垃圾桶刪除
+            <h3 className={`font-bold text-xl mb-2 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>使用小撇步</h3>
+            <p className="text-sm font-medium opacity-80 leading-relaxed max-w-2xl">
+              系統將於倒數 <span className="font-bold underline">1:00</span>、<span className="font-bold underline">0:30</span> 及 <span className="font-bold underline">0:10</span> 發出音效提醒。您可以長按並拖移卡片來調整順序，或將其拉到底部區域刪除。點擊隊伍名稱即可隨時自訂標題。
             </p>
           </div>
         </div>
 
-        <footer className="mt-12 text-center pb-24">
-          <div className="flex justify-center gap-4 mb-6 opacity-30 transition-all duration-700">
+        <footer className="mt-20 text-center pb-12 border-t border-slate-200 dark:border-slate-800 pt-12">
+          <div className="flex justify-center gap-6 mb-8 opacity-40 transition-all">
              {theme === 'christmas' ? (
                <>
-                <TreePine size={20} className="text-[#165B33]" />
-                <Snowflake size={20} className="text-[#BB2528]" />
-                <TreePine size={20} className="text-[#165B33]" />
+                <TreePine size={18} className="text-[#BB2528]" />
+                <Snowflake size={18} className="text-blue-300" />
+                <Gift size={18} className="text-[#BB2528]" />
                </>
              ) : theme === 'dark' ? (
                <>
-                <Sparkles size={20} className="text-cyan-400" />
-                <Sparkles size={20} className="text-indigo-400" />
-                <Sparkles size={20} className="text-cyan-400" />
+                <Sparkles size={18} className="text-cyan-400" />
+                <Moon size={18} className="text-indigo-400" />
+                <Sparkles size={18} className="text-cyan-400" />
                </>
              ) : (
                <>
-                <Flower size={20} className="text-[#76d02a]" />
-                <Flower size={20} className="text-[#76d02a]" />
-                <Flower size={20} className="text-[#76d02a]" />
+                <Flower size={18} className="text-[#76d02a]" />
+                <Timer size={18} className="text-[#76d02a]" />
+                <Flower size={18} className="text-[#76d02a]" />
                </>
              )}
           </div>
-          <div className="space-y-1">
-            <p className={`${theme === 'christmas' ? 'text-[#BB2528]/70' : theme === 'dark' ? 'text-cyan-400/50' : 'text-[#76d02a]/70'} text-[11px] font-black tracking-[0.25em] uppercase transition-colors duration-700`}>
-              Designed for Pikmin Bloom Explorers
+          <div className="space-y-2">
+            <p className={`${theme === 'christmas' ? 'text-red-900/60' : theme === 'dark' ? 'text-slate-500' : 'text-slate-400'} text-[10px] font-bold tracking-[0.4em] uppercase transition-colors duration-700`}>
+              Est. 2024 • Bloom Labs
             </p>
-            <p className={`text-[10px] font-bold transition-colors duration-700 opacity-40 ${theme === 'dark' ? 'text-cyan-400' : (theme === 'christmas' ? 'text-[#BB2528]' : 'text-[#417417]')}`}>
-              v2.3 • Multi-Alert Audio Update
+            <p className={`text-[12px] font-bold transition-colors duration-700 ${theme === 'dark' ? 'text-slate-600' : 'text-slate-300'}`}>
+              Version 3.4 • Dynamic Subtitles
             </p>
           </div>
         </footer>
       </div>
 
+      {/* Floating Action Button - Fixed Clock Button */}
+      <button
+        onClick={handleAddTeam}
+        className={`fixed bottom-8 right-8 z-[70] w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500 active:scale-90 hover:scale-110 group
+          bg-white border border-slate-100 text-[#76d02a]
+          shadow-[0_10px_25px_rgba(0,0,0,0.1)] hover:shadow-[0_15px_35px_rgba(118,208,42,0.3)]
+          ${draggedId !== null ? 'translate-y-32 opacity-0' : 'translate-y-0 opacity-100'}
+        `}
+      >
+        <Clock size={32} strokeWidth={2.5} className="group-hover:rotate-12 transition-transform duration-300" />
+        <Plus size={14} strokeWidth={4} className="absolute top-3 right-3 bg-white p-0.5 rounded-full border-2 border-[#76d02a] translate-x-1 -translate-y-1" />
+      </button>
+
       {/* Trash Zone */}
       <div 
         className={`fixed bottom-0 left-0 w-full transition-all duration-500 z-[60] flex items-center justify-center
-          ${draggedId !== null ? 'translate-y-0 h-40 opacity-100' : 'translate-y-full h-0 opacity-0'}
+          ${draggedId !== null ? 'translate-y-0 h-48 opacity-100' : 'translate-y-full h-0 opacity-0'}
         `}
         onDragOver={(e) => {
           e.preventDefault();
@@ -242,30 +252,31 @@ export default function App() {
         }}
       >
         <div className={`
-          flex flex-col items-center gap-3 p-8 rounded-t-[3rem] transition-all duration-300 w-full max-w-lg
+          flex flex-col items-center gap-4 p-10 rounded-t-[4rem] transition-all duration-300 w-full max-w-2xl
           ${isOverTrash 
-            ? 'bg-red-600/90 text-white scale-110 shadow-[0_-20px_50px_rgba(220,38,38,0.5)]' 
-            : 'bg-red-500/20 text-red-500 backdrop-blur-xl border-t border-red-500/30'
+            ? 'bg-red-600 text-white scale-105 shadow-2xl' 
+            : 'bg-slate-900/90 text-slate-400 backdrop-blur-2xl border-t border-white/10'
           }
         `}>
-          <div className={`p-4 rounded-full transition-all ${isOverTrash ? 'bg-white/20 scale-125 rotate-12' : 'bg-red-500/10 animate-bounce'}`}>
-            <Trash2 size={48} strokeWidth={2.5} />
+          <div className={`p-5 rounded-full transition-all ${isOverTrash ? 'bg-white/20 scale-110' : 'bg-slate-800'}`}>
+            <Trash2 size={40} strokeWidth={2.5} />
           </div>
-          <span className="font-black text-sm tracking-widest uppercase">
-            {isOverTrash ? '放開以刪除隊伍' : '拖曳到此處刪除'}
+          <span className="font-bold text-xs tracking-[0.3em] uppercase">
+            {isOverTrash ? '放開以刪除' : '將隊伍拖移至此處刪除'}
           </span>
         </div>
       </div>
 
-      <div className={`fixed bottom-0 left-0 w-full p-4 flex justify-center pointer-events-none transition-transform duration-500 ${draggedId !== null ? 'translate-y-full' : 'translate-y-0'}`}>
-        <div className={`backdrop-blur-xl px-8 py-3 rounded-full border shadow-2xl text-[10px] font-black tracking-widest uppercase transition-all duration-700
+      {/* Floating Badge */}
+      <div className={`fixed bottom-6 left-6 p-1 flex justify-center pointer-events-none transition-all duration-500 ${draggedId !== null ? 'opacity-0' : 'opacity-100'}`}>
+        <div className={`backdrop-blur-xl px-5 py-2 rounded-full border shadow-sm text-[9px] font-bold tracking-[0.2em] uppercase transition-all duration-700
           ${theme === 'dark' 
-            ? 'bg-[#0f172a]/90 border-cyan-500/30 text-[#22d3ee] shadow-cyan-500/10' 
+            ? 'bg-slate-900/90 border-slate-800 text-cyan-400' 
             : theme === 'christmas'
-            ? 'bg-[#BB2528]/90 border-[#BB2528]/20 text-white'
-            : 'bg-white/90 border-[#76d02a]/20 text-[#76d02a]'
+            ? 'bg-white border-red-50 text-red-600'
+            : 'bg-white border-slate-100 text-slate-400'
           }`}>
-          {theme === 'christmas' ? 'Merry Christmas!' : theme === 'dark' ? 'Bioluminescence Active' : 'Happy Exploring!'}
+          {theme === 'christmas' ? 'Season Greetings' : theme === 'dark' ? 'Void System Online' : 'Blooming Daily'}
         </div>
       </div>
     </div>
