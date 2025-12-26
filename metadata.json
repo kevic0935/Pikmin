@@ -1,0 +1,5 @@
+{
+  "name": "Pikmin Bloom Mushroom Battle Timer",
+  "description": "A playful and functional countdown assistant for Pikmin Bloom players to manage multiple mushroom battles simultaneously with custom audio alerts.",
+  "requestFramePermissions": []
+}
