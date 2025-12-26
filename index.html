@@ -1,22 +1,59 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pikmin Bloom Timer</title>
+    <title>Pikmin Bloom 蘑菇挑戰倒數計時器 - 專業蘑菇殺手助手 | Mushroom Timer</title>
+    
+    <!-- SEO & Metadata -->
+    <meta name="description" content="專為 Pikmin Bloom 玩家設計的蘑菇殺手倒數計時器。協助玩家精確管理多場蘑菇挑戰，提供 1分鐘、30秒及10秒音效提醒，優化你的蘑菇戰鬥策略。" />
+    <meta name="keywords" content="Pikmin Bloom, 蘑菇挑戰, 蘑菇殺手, 倒數計時器, 蘑菇計時, 皮克敏, 遊戲助手, 蘑菇戰鬥, 倒數計時" />
+    <meta name="author" content="Bloom Labs" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Pikmin Bloom 蘑菇挑戰倒數計時器 - 專業蘑菇殺手助手" />
+    <meta property="og:description" content="精確管理你的 Pikmin Bloom 蘑菇挑戰。支援多組倒數、自訂名稱及專業音效提醒。" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1590502160462-09971871a396?auto=format&fit=crop&q=80&w=1000" />
+
+    <!-- Structured Data (AEO/GEO Optimization) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Pikmin Bloom 蘑菇挑戰倒數計時器",
+      "description": "A countdown timer utility for Pikmin Bloom Mushroom Challenges.",
+      "applicationCategory": "GameTool",
+      "operatingSystem": "Web",
+      "author": {
+        "@type": "Organization",
+        "name": "Bloom Labs"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "TWD"
+      }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
       body {
         font-family: 'Plus Jakarta Sans', sans-serif;
       }
-      /* Custom utility for 3D buttons */
       .btn-3d {
         transition: all 0.1s ease;
       }
       .btn-3d:active {
         transform: translateY(4px);
         box-shadow: none !important;
+      }
+      /* Smooth transitions for theme changes */
+      * {
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
       }
     </style>
     <script type="importmap">
