@@ -11,39 +11,20 @@ interface MushroomTimerProps {
 
 const MushroomTimer: React.FC<MushroomTimerProps> = ({ id, theme = 'light' }) => {
   const [teamName, setTeamName] = useState(`蘑菇隊伍 ${id}`);
-  const [hours, setHours] = useState<string>('0');
-  const [minutes, setMinutes] = useState<string>('0');
-  const [seconds, setSeconds] = useState<string>('0');
   const [timeLeft, setTimeLeft] = useState(0); 
   const [isRunning, setIsRunning] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Special behavior for Team 3 and 4
-  const isQuickStartTeam = id === 3 || id === 4;
-
-  const handleSetTime = () => {
-    const h = parseInt(hours) || 0;
-    const m = parseInt(minutes) || 0;
-    const s = parseInt(seconds) || 0;
-    const total = h * 3600 + m * 60 + s;
-    if (total > 0) {
-      setTimeLeft(total);
-    }
-  };
-
+  // Unified behavior for all teams
   const handleQuickStart = () => {
-    setTimeLeft(300); // 5 minutes
+    setTimeLeft(300); // 5 minutes (300 seconds)
     setIsRunning(true);
   };
 
   const addFiveMinutes = () => {
-    const newTime = timeLeft + 300;
-    setTimeLeft(newTime);
-    setHours(Math.floor(newTime / 3600).toString());
-    setMinutes(Math.floor((newTime % 3600) / 60).toString());
-    setSeconds((newTime % 60).toString());
+    setTimeLeft(prev => prev + 300);
   };
 
   const toggleTimer = () => {
@@ -57,9 +38,6 @@ const MushroomTimer: React.FC<MushroomTimerProps> = ({ id, theme = 'light' }) =>
   const resetTimer = () => {
     setIsRunning(false);
     setTimeLeft(0);
-    setHours('0');
-    setMinutes('0');
-    setSeconds('0');
   };
 
   useEffect(() => {
@@ -146,37 +124,10 @@ const MushroomTimer: React.FC<MushroomTimerProps> = ({ id, theme = 'light' }) =>
       </div>
 
       {!isRunning && timeLeft === 0 ? (
-        <>
-          {isQuickStartTeam ? (
-            <div className={`text-center py-6 flex flex-col items-center justify-center gap-2 opacity-50`}>
-               <Zap className={`${theme === 'christmas' ? 'text-[#BB2528]' : 'text-[#76d02a]'}`} size={32} />
-               <p className={`text-sm font-black ${theme === 'christmas' ? 'text-[#BB2528]' : 'text-[#417417]'}`}>點擊下方按鈕開始 5min 計時</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-3 gap-3 mb-6">
-              {[
-                { label: '時', value: hours, setter: setHours },
-                { label: '分', value: minutes, setter: setMinutes },
-                { label: '秒', value: seconds, setter: setSeconds }
-              ].map((item, i) => (
-                <div key={i} className={`p-3 rounded-[1.5rem] border transition-colors duration-500 
-                  ${theme === 'dark' ? 'bg-[#233b15] border-[#76d02a]/10' : (theme === 'christmas' ? 'bg-red-50/50 border-red-100' : 'bg-gray-50 border-gray-100')}`}>
-                  <label className={`block text-center text-[10px] font-extrabold uppercase tracking-widest mb-1 
-                    ${theme === 'dark' ? 'text-[#76d02a]/40' : (theme === 'christmas' ? 'text-[#BB2528]/40' : 'text-gray-400')}`}>
-                    {item.label}
-                  </label>
-                  <input 
-                    type="number" 
-                    value={item.value} 
-                    onChange={(e) => item.setter(e.target.value)}
-                    className={`w-full bg-transparent text-xl font-black text-center outline-none ${theme === 'dark' ? 'text-[#d9f2c1]' : (theme === 'christmas' ? 'text-[#BB2528]' : 'text-gray-700')}`}
-                    placeholder="0"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-        </>
+        <div className={`text-center py-6 flex flex-col items-center justify-center gap-2 opacity-50`}>
+           <Zap className={`${theme === 'christmas' ? 'text-[#BB2528]' : 'text-[#76d02a]'}`} size={32} />
+           <p className={`text-sm font-black ${theme === 'christmas' ? 'text-[#BB2528]' : 'text-[#417417]'}`}>點擊下方按鈕開始 5min 計時</p>
+        </div>
       ) : (
         <div className="text-center py-6">
           <span className={`text-5xl md:text-6xl font-mono font-black tracking-tight transition-colors duration-500 
@@ -189,11 +140,11 @@ const MushroomTimer: React.FC<MushroomTimerProps> = ({ id, theme = 'light' }) =>
       <div className="flex flex-col gap-3">
         {!isRunning && timeLeft === 0 ? (
           <button 
-            onClick={isQuickStartTeam ? handleQuickStart : handleSetTime}
+            onClick={handleQuickStart}
             className={`w-full text-white py-4 rounded-full font-black text-lg btn-3d transition-all duration-500 flex items-center justify-center gap-2
               ${theme === 'christmas' ? 'bg-[#BB2528] hover:bg-[#d42c2c] shadow-[0_6px_0_0_#7f1d1d]' : 'bg-[#76d02a] hover:bg-[#86e03a] shadow-[0_6px_0_0_#417417]'}`}
           >
-            {isQuickStartTeam ? <><Play size={20} fill="white" /> 5min 計時</> : '設定時間'}
+            <Play size={20} fill="white" /> 5min 計時
           </button>
         ) : (
           <div className="grid grid-cols-12 gap-3">

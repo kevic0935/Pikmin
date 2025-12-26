@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Timer, Flower, Moon, Sun, TreePine, Snowflake, Gift } from 'lucide-react';
+import { Timer, Flower, Moon, Sun, TreePine, Snowflake, Gift, Plus } from 'lucide-react';
 import MushroomTimer from './components/MushroomTimer.tsx';
 
 export type ThemeType = 'light' | 'dark' | 'christmas';
@@ -14,7 +14,13 @@ export default function App() {
     return 'light';
   });
 
-  const timers = [1, 2, 3, 4];
+  const [timerIds, setTimerIds] = useState<number[]>([1, 2]);
+  const [nextId, setNextId] = useState(3);
+
+  const handleAddTeam = () => {
+    setTimerIds([...timerIds, nextId]);
+    setNextId(nextId + 1);
+  };
 
   useEffect(() => {
     document.documentElement.classList.remove('dark');
@@ -136,10 +142,27 @@ export default function App() {
         </div>
 
         {/* Timers Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          {timers.map(num => (
-            <MushroomTimer key={num} id={num} theme={theme} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
+          {timerIds.map(id => (
+            <MushroomTimer key={id} id={id} theme={theme} />
           ))}
+        </div>
+
+        {/* Add Team Button */}
+        <div className="flex justify-center mb-12">
+          <button
+            onClick={handleAddTeam}
+            className={`px-10 py-5 rounded-full font-black text-xl btn-3d flex items-center gap-3 transition-all duration-500 shadow-xl
+              ${theme === 'christmas'
+                ? 'bg-[#165B33] text-white shadow-[0_6px_0_0_#064e3b] hover:bg-[#1b7a44]'
+                : (theme === 'dark'
+                    ? 'bg-[#76d02a] text-[#162a0c] shadow-[0_6px_0_0_#417417] hover:bg-[#86e03a]'
+                    : 'bg-[#76d02a] text-white shadow-[0_6px_0_0_#417417] hover:bg-[#86e03a]')
+              }`}
+          >
+            <Plus size={28} strokeWidth={4} />
+            新增隊伍
+          </button>
         </div>
 
         {/* Footer Branding */}
@@ -164,7 +187,7 @@ export default function App() {
               Designed for Pikmin Bloom Explorers
             </p>
             <p className={`text-[10px] font-bold transition-colors duration-500 ${theme === 'dark' ? 'text-[#76d02a]/40' : (theme === 'christmas' ? 'text-[#BB2528]/40' : 'text-[#417417]/40')}`}>
-              v1.5 • 聖誕限定版 & Web Audio API
+              v1.9 • 動態新增隊伍 & Quick Start
             </p>
           </div>
         </footer>
