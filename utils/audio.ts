@@ -1,5 +1,5 @@
 
-export type AlertType = 'warning60' | 'warning30' | 'warning10';
+export type AlertType = 'warning60' | 'warning30' | 'warning10' | 'start';
 
 export const playSound = (type: AlertType) => {
   try {
@@ -25,7 +25,11 @@ export const playSound = (type: AlertType) => {
       oscillator.stop(audioCtx.currentTime + startTime + duration);
     };
 
-    if (type === 'warning60') {
+    if (type === 'start') {
+      // Pleasant rising start sound
+      playNote(523.25, 0.2, 0, 0.3); // C5
+      playNote(659.25, 0.4, 0.1, 0.3); // E5
+    } else if (type === 'warning60') {
       // Gentle long chime for 1 minute
       playNote(440, 0.8); // A4
     } else if (type === 'warning30') {

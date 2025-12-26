@@ -210,10 +210,10 @@ export default function App() {
           </div>
           <div className="space-y-2">
             <p className={`${theme === 'christmas' ? 'text-red-900/60' : theme === 'dark' ? 'text-slate-500' : 'text-slate-400'} text-[10px] font-bold tracking-[0.4em] uppercase transition-colors duration-700`}>
-              Est. 2024 • Bloom Labs
+              Est. 2025 • Bloom Labs
             </p>
             <p className={`text-[12px] font-bold transition-colors duration-700 ${theme === 'dark' ? 'text-slate-600' : 'text-slate-300'}`}>
-              Version 3.4 • Dynamic Subtitles
+              Version 2.0
             </p>
           </div>
         </footer>

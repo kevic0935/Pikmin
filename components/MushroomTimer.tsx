@@ -31,6 +31,7 @@ const MushroomTimer: React.FC<MushroomTimerProps> = ({
   const handleQuickStart = () => {
     setTimeLeft(300); // 5 minutes
     setIsRunning(true);
+    if (!isMuted) playSound('start');
   };
 
   const addFiveMinutes = () => {
@@ -40,6 +41,7 @@ const MushroomTimer: React.FC<MushroomTimerProps> = ({
   const toggleTimer = () => {
     if (!isRunning && timeLeft > 0) {
       setIsRunning(true);
+      if (!isMuted) playSound('start');
     } else {
       setIsRunning(false);
     }
@@ -170,7 +172,7 @@ const MushroomTimer: React.FC<MushroomTimerProps> = ({
             className={`w-full text-white py-4 rounded-2xl font-bold text-base transition-all duration-500 flex items-center justify-center gap-3 shadow-sm active:scale-95
               ${theme === 'christmas' ? 'bg-[#BB2528] hover:bg-[#d42c2c]' : theme === 'dark' ? 'bg-cyan-600 hover:bg-cyan-500' : 'bg-slate-900 hover:bg-slate-800'}`}
           >
-            <Play size={18} fill="white" /> Start 5min
+            <Play size={18} fill="white" /> 5min
           </button>
         ) : (
           <div className="grid grid-cols-12 gap-3">
