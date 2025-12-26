@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Square, RotateCcw, Plus, BellRing, Volume2, VolumeX, Edit2 } from 'lucide-react';
-import { playSound } from '../utils/audio';
+import { playSound } from '../utils/audio.ts';
 
 interface MushroomTimerProps {
   id: number;

@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Timer, Flower } from 'lucide-react';
-import MushroomTimer from './components/MushroomTimer';
+import MushroomTimer from './components/MushroomTimer.tsx';
 
 export default function App() {
   const timers = [1, 2, 3, 4];
