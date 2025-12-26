@@ -21,7 +21,7 @@ const MushroomTimer: React.FC<MushroomTimerProps> = ({
   onDragOver,
   isDragging = false 
 }) => {
-  const [teamName, setTeamName] = useState(`Mushroom Squad ${id}`);
+  const [teamName, setTeamName] = useState(`一起打蘑菇 ${id}`);
   const [timeLeft, setTimeLeft] = useState(0); 
   const [isRunning, setIsRunning] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
