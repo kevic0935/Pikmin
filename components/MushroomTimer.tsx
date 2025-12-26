@@ -57,7 +57,8 @@ const MushroomTimer: React.FC<MushroomTimerProps> = ({
           const next = prev - 1;
           
           if (!isMuted) {
-            if (next === 20) playSound('warning20');
+            if (next === 60) playSound('warning60');
+            if (next === 30) playSound('warning30');
             if (next === 10) playSound('warning10');
           }
           
@@ -97,7 +98,7 @@ const MushroomTimer: React.FC<MushroomTimerProps> = ({
     if (timeLeft <= 10 && timeLeft > 0) {
         return `${baseClasses} bg-red-500/10 border-red-500 animate-pulse ring-4 ring-red-500/20 ${scaleClass}`;
     }
-    if (timeLeft <= 20 && timeLeft > 0) {
+    if (timeLeft <= 30 && timeLeft > 0) {
         return `${baseClasses} bg-orange-500/10 border-orange-400 ring-4 ring-orange-500/20 ${scaleClass}`;
     }
     
@@ -120,7 +121,6 @@ const MushroomTimer: React.FC<MushroomTimerProps> = ({
       onDragOver={onDragOver}
       className={getCardStyle()}
     >
-      {/* Top Header Row - More Compact */}
       <div className="flex items-center justify-between mb-3 gap-2">
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <div className={`w-9 h-9 shrink-0 rounded-xl flex items-center justify-center text-white font-black shadow-[0_3px_0_0] transition-all duration-700
@@ -133,7 +133,7 @@ const MushroomTimer: React.FC<MushroomTimerProps> = ({
               type="text"
               value={teamName}
               onChange={(e) => setTeamName(e.target.value)}
-              onClick={(e) => e.stopPropagation()} // Allow typing without dragging
+              onClick={(e) => e.stopPropagation()} 
               className={`w-full bg-transparent border-b-2 border-transparent hover:border-current/30 focus:border-current focus:outline-none text-lg font-black py-0.5 px-1 transition-all truncate
                 ${getTeamLabelColor()}`}
               placeholder="輸入隊伍名稱..."
@@ -162,7 +162,7 @@ const MushroomTimer: React.FC<MushroomTimerProps> = ({
       ) : (
         <div className="text-center py-3">
           <span className={`text-5xl font-mono font-black tracking-tighter transition-all duration-700 
-            ${timeLeft <= 20 ? 'text-red-500 drop-shadow-[0_0_12px_rgba(239,68,68,0.5)]' : (theme === 'dark' ? 'text-cyan-200 drop-shadow-[0_0_12px_rgba(34,211,238,0.4)]' : theme === 'christmas' ? 'text-[#BB2528]' : 'text-[#2e5210]')}`}>
+            ${timeLeft <= 10 ? 'text-red-500 drop-shadow-[0_0_12px_rgba(239,68,68,0.5)]' : (theme === 'dark' ? 'text-cyan-200 drop-shadow-[0_0_12px_rgba(34,211,238,0.4)]' : theme === 'christmas' ? 'text-[#BB2528]' : 'text-[#2e5210]')}`}>
             {formatTime(timeLeft)}
           </span>
         </div>
@@ -208,7 +208,7 @@ const MushroomTimer: React.FC<MushroomTimerProps> = ({
         )}
       </div>
       
-      {timeLeft <= 20 && timeLeft > 0 && (
+      {timeLeft <= 10 && timeLeft > 0 && (
         <div className="mt-3 text-center">
             <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[9px] font-black border animate-bounce shadow-lg transition-all duration-700
               ${theme === 'dark' ? 'bg-cyan-500/30 text-cyan-300 border-cyan-400/50 shadow-cyan-500/30' : theme === 'christmas' ? 'bg-[#BB2528]/10 text-[#BB2528] border-[#BB2528]/20' : 'bg-white/70 text-red-600 border-red-200'}`}>

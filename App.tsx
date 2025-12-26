@@ -168,7 +168,7 @@ export default function App() {
           </button>
         </div>
 
-        {/* Information/Instruction Card (Moved to below button) */}
+        {/* Information/Instruction Card */}
         <div className={`backdrop-blur-xl border-2 p-6 rounded-[2.5rem] mb-12 flex gap-5 items-center shadow-2xl transition-all duration-700
           ${theme === 'dark' 
             ? 'bg-[#1e293b]/40 border-cyan-500/20 shadow-cyan-900/20 text-cyan-50' 
@@ -184,7 +184,7 @@ export default function App() {
               {theme === 'christmas' ? '聖誕活動提醒' : theme === 'dark' ? '幻彩模式提醒' : '戰鬥提醒說明'}
             </p>
             <p className="text-sm font-semibold opacity-70 leading-relaxed">
-              • 長按卡片可拖曳順序 • 拖曳至底部垃圾桶刪除 • 點擊名稱即可修改
+              • 音效提示：1分鐘 (長音) / 30秒 (雙音) / 10秒 (緊急三音) • 長按卡片可拖曳順序 • 拖曳至底部垃圾桶刪除
             </p>
           </div>
         </div>
@@ -216,7 +216,7 @@ export default function App() {
               Designed for Pikmin Bloom Explorers
             </p>
             <p className={`text-[10px] font-bold transition-colors duration-700 opacity-40 ${theme === 'dark' ? 'text-cyan-400' : (theme === 'christmas' ? 'text-[#BB2528]' : 'text-[#417417]')}`}>
-              v2.2 • Layout Optimization
+              v2.3 • Multi-Alert Audio Update
             </p>
           </div>
         </footer>
